@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(dotnet build *)",
+      "PowerShell(dotnet build *)",
+      "Bash(dotnet restore *)",
+      "PowerShell(dotnet restore *)",
+      "Bash(dotnet test *)",
+      "PowerShell(dotnet test *)",
+      "Bash(dotnet ef migrations list *)",
+      "PowerShell(dotnet ef migrations list *)"
+    ]
+  },
+  "enableAllProjectMcpServers": false
+}

@@ -1,0 +1,14 @@
+**/bin/
+**/obj/
+.vs/
+.vscode/
+publish/
+publish.zip
+# Build files
+**/bin/
+**/obj/
+.vs/
+.vscode/
+publish/
+publish.zip
+**/appsettings.Development.json
