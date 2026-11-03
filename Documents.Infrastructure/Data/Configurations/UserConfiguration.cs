@@ -23,7 +23,7 @@ namespace Documents.Infrastructure.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<SetupStateEntity> builder)
         {
-            builder.ToTable("SetupState", t => t.HasCheckConstraint("CK_SetupState_Singleton", "[Id] = 1"));
+            builder.ToTable("SetupState", t => t.HasCheckConstraint("CK_SetupState_Singleton", "\"Id\" = 1"));
             builder.HasKey(s => s.Id);
             builder.Property(s => s.Id).ValueGeneratedNever();
             builder.HasOne(s => s.ClosedByUser).WithMany().HasForeignKey(s => s.ClosedByUserId).OnDelete(DeleteBehavior.Restrict);

@@ -23,7 +23,7 @@ namespace Documents.Infrastructure
         {
             services.AddDbContext<AppDbContext>((provider, options) =>
             {
-                options.UseSqlServer(provider.GetRequiredService<IOptionsSnapshot<ConnectionStringOptions>>().Value.DefaultConnection);
+                options.UseNpgsql(provider.GetRequiredService<IOptionsSnapshot<ConnectionStringOptions>>().Value.DefaultConnection);
             });
 
             // Repositories

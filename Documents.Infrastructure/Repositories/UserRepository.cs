@@ -69,7 +69,7 @@ namespace Documents.Infrastructure.Repositories
             {
                 await db.RevokedTokens.Where(t => t.ExpiresOn < now).ExecuteDeleteAsync(ct);
             }
-            catch (Microsoft.Data.SqlClient.SqlException)
+            catch (System.Data.Common.DbException)
             {
                 // Agle logout par phir koshish hogi
             }

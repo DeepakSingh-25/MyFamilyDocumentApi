@@ -13,7 +13,7 @@ namespace Documents.Infrastructure.Data.Configurations
             builder.Property(m => m.Name).HasMaxLength(DomainRules.MemberNameMax).IsRequired();
             // Naam per user unique (default collation case-insensitive hai) — sirf active members mein,
             // taaki deleted "Asha" ke baad nayi "Asha" add ho sake (spec 007 §B.5)
-            builder.HasIndex(m => new { m.UserId, m.Name }).IsUnique().HasFilter("[DeletedOn] IS NULL");
+            builder.HasIndex(m => new { m.UserId, m.Name }).IsUnique().HasFilter("\"DeletedOn\" IS NULL");
             // Soft delete: deleted members poore app se gayab; restore sirf SQL se. Filter bypass karne wala code kahin nahi.
             builder.HasQueryFilter(m => m.DeletedOn == null);
             // Restrict: SQL Server multiple cascade paths allow nahi karta (Users → Documents bhi hai)
@@ -32,7 +32,7 @@ namespace Documents.Infrastructure.Data.Configurations
             builder.Property(r => r.Name).HasMaxLength(DomainRules.RelationshipMax).IsRequired();
             // UserId null = system. SQL Server unique index mein NULLs barabar maane jaate hain, isliye system naam bhi unique.
             // Sirf active rows — delete ke baad wahi naam dobara ban sake.
-            builder.HasIndex(r => new { r.UserId, r.Name }).IsUnique().HasFilter("[IsActive] = 1");
+            builder.HasIndex(r => new { r.UserId, r.Name }).IsUnique().HasFilter("\"IsActive\" = true");
             builder.HasOne<UserEntity>().WithMany().HasForeignKey(r => r.UserId).OnDelete(DeleteBehavior.Restrict);
 
             // Reference data — fixed GUIDs contract hain (Self = SystemRelationshipId(1)), order DomainRules.SystemRelationships wala
@@ -56,7 +56,7 @@ namespace Documents.Infrastructure.Data.Configurations
             builder.Property(c => c.Icon).HasMaxLength(40).IsRequired();
             builder.Property(c => c.Examples).HasMaxLength(DomainRules.CategoryExamplesMax).IsRequired();
             // UserId null = system; naam per user unique, sirf active rows (RelationshipConfiguration jaisa)
-            builder.HasIndex(c => new { c.UserId, c.Name }).IsUnique().HasFilter("[IsActive] = 1");
+            builder.HasIndex(c => new { c.UserId, c.Name }).IsUnique().HasFilter("\"IsActive\" = true");
             builder.HasOne<UserEntity>().WithMany().HasForeignKey(c => c.UserId).OnDelete(DeleteBehavior.Restrict);
 
             // Reference data (demo data nahi) — fixed GUIDs frontend ke saath contract hain (spec 014), 3 = Medical.
